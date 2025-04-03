@@ -1,23 +1,26 @@
 const express = require('express');
-const dotenv = require('dotenv');
-dotenv.config();
-
-process.env.MONGO_URI = "mongodb+srv://mounikakondreddy67:v5zkghjzchxGvgdI@cluster0.sdfaprk.mongodb.net/netflix_db?retryWrites=true&w=majority&appName=Cluster0";
-process.env.JWT_SECRET = 10
+const cookieParser = require('cookie-parser');
+require('dotenv').config();
 
 const authRoutes = require('./routes/authRoute');
+const movieRoutes= require('./routes/movieRoute');
+const tvRoutes = require('./routes/tvRoute');
+const searchRoute = require('./routes/searchRoute');
+
 const envVars = require('./config/envVars');
 const connectDB = require('./config/db');
-const movieRoutes= require('./routes/movieRoute');
+const protectRoute = require('./middleware/protectRoute');
 
 const app = express();
 const PORT = envVars.PORT;
-app.use(express.json())
 
-console.log("MONGO_URI:", process.env.MONGO_URI);
+app.use(express.json());
+app.use(cookieParser()); 
 
 app.use('/api/v1/auth', authRoutes);
-app.use('/api/v1/movie', movieRoutes)
+app.use('/api/v1/movie', protectRoute, movieRoutes);
+app.use('/api/v1/tv', protectRoute, tvRoutes);
+app.use('/api/v1/search', searchRoute);
 
 app.listen(PORT, () => {
     console.log("Server started at http://localhost:" + PORT);
