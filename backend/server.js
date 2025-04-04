@@ -20,7 +20,7 @@ app.use(cookieParser());
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/movie', protectRoute, movieRoutes);
 app.use('/api/v1/tv', protectRoute, tvRoutes);
-app.use('/api/v1/search', searchRoute);
+app.use('/api/v1/search', protectRoute, searchRoute);
 
 app.listen(PORT, () => {
     console.log("Server started at http://localhost:" + PORT);
