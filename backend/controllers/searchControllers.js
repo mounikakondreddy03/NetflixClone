@@ -96,6 +96,7 @@ async function getSearchHistory(req, res) {
 
 async function removeItemFromSearchHistory(req, res) {
     const { id } = req.params;
+    
     id = parseInt(id)
 
     try {
