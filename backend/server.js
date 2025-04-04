@@ -1,6 +1,7 @@
 const express = require('express');
 const cookieParser = require('cookie-parser');
 require('dotenv').config();
+const cors = require('cors')
 
 const authRoutes = require('./routes/authRoute');
 const movieRoutes= require('./routes/movieRoute');
@@ -12,6 +13,7 @@ const connectDB = require('./config/db');
 const protectRoute = require('./middleware/protectRoute');
 
 const app = express();
+app.use(cors())
 const PORT = envVars.PORT;
 
 app.use(express.json());

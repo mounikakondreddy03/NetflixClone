@@ -8,10 +8,11 @@ export const useAuthStore = create((set) => ({
 	isCheckingAuth: true,
 	isLoggingOut: false,
 	isLoggingIn: false,
+
 	signup: async (credentials) => {
 		set({ isSigningUp: true });
 		try {
-			const response = await axios.post("/api/v1/auth/signup", credentials);
+			const response = await axios.post("https://netflixclone-vrof.onrender.com/api/v1/auth/signup", credentials);
 			set({ user: response.data.user, isSigningUp: false });
 			toast.success("Account created successfully");
 		} catch (error) {
@@ -19,6 +20,7 @@ export const useAuthStore = create((set) => ({
 			set({ isSigningUp: false, user: null });
 		}
 	},
+
 	login: async (credentials) => {
 		set({ isLoggingIn: true });
 		try {
@@ -29,6 +31,7 @@ export const useAuthStore = create((set) => ({
 			toast.error(error.response.data.message || "Login failed");
 		}
 	},
+
 	logout: async () => {
 		set({ isLoggingOut: true });
 		try {
@@ -40,6 +43,7 @@ export const useAuthStore = create((set) => ({
 			toast.error(error.response.data.message || "Logout failed");
 		}
 	},
+
 	authCheck: async () => {
 		set({ isCheckingAuth: true });
 		try {

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
-const SMALL_IMG_BASE_URL = require('../utils/contansts')
+import { SMALL_IMG_BASE_URL } from '../utils/contansts';
 import { Trash } from "lucide-react";
 import toast from "react-hot-toast";
 
