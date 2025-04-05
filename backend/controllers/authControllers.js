@@ -63,12 +63,13 @@ async function login(req, res) {
         if (!isPasswordCorrect)
             return res.status(400).json({ success: false, message: "Invalid credentials"})
 
-        generateTokenAndSetCookie(user._id, res)
+        const token = generateTokenAndSetCookie(user._id, res)
 
         res.status(200).json({success: true, 
             user: {
                 ...user._doc,
-                password
+                password,
+                token
             }
         })
     } catch (error) {
@@ -97,4 +98,4 @@ async function authCheck(req, res) {
     }
 }
 
-module.exports = { signup, login, logout, authCheck}
+module.exports = { signup, login, logout, authCheck} 

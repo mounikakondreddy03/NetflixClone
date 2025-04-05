@@ -11,4 +11,5 @@ router.post('/login', login)
 router.post('/logout',logout)
 
 router.get('/authcheck', protectRoute, authCheck)
+
 module.exports = router;
