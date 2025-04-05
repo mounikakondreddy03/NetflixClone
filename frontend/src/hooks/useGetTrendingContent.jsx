@@ -12,7 +12,7 @@ const useGetTrendingContent = () => {
 			setTrendingContent(res.data.content);
 		};
 
-		console.log("data:", getTrendingContent);
+		console.log("data:", getTrendingContent.res);
 		console.log("contentType:", setTrendingContent);
 		getTrendingContent();
 	}, [contentType]);

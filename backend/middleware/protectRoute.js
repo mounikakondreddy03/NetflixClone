@@ -12,15 +12,16 @@ const protectRoute = async (req, res, next) => {
         if(!decoded) 
             return res.status(401).json({success: false, message: "Invalid token"})
 
-        const user = await User.findById(decoded.userId).select("-password")
-        if (!user) 
-            return res.status(404).json({success: false, message: "User not found"})
+        // const user = await User.findById(decoded.userId).select("-password")
+        // if (!user) 
+        //     return res.status(404).json({success: false, message: "User not found"})
 
-        req.user = user;
+        req.user = await User.findById(decoded.id);
         next();
     } catch (error) {
         console.log("Error in protectRoute middleware:", error.message);
-        res.status(500).json({success: false, message: "Internal Server Error"})
+        res.status(401).json({ success: false, message: 'unauthorized'})
+        // res.status(500).json({success: false, message: "Internal Server Error"})
     }
 }
 
