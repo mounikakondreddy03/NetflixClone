@@ -55,7 +55,7 @@ export const useAuthStore = create((set) => ({
 
 		set({ isCheckingAuth: true });
 		try {
-			const response = await axios.get("https://netflixclone-vrof.onrender.com/api/v1/auth/authcheck");
+			const response = await axios.get("https://netflixclone-vrof.onrender.com/api/v1/auth/authcheck", { withCredentials: true});
 
 			console.log("Authcheck successfully;")
 			set({ user: response.data.user, isCheckingAuth: false });

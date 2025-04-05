@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { LogOut, Menu, Search } from "lucide-react";
@@ -33,7 +32,7 @@ const Navbar = () => {
 					<Menu className='size-6 cursor-pointer' onClick={toggleMobileMenu} />
 				</div>
 			</div>
-
+  
 			{isMobileMenuOpen && (
 				<div className='w-full sm:hidden mt-4 z-50 bg-black border rounded border-gray-800'>
 					<Link to={"/"} className='block hover:underline p-2' onClick={toggleMobileMenu}> Movies </Link>
