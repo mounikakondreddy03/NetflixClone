@@ -6,7 +6,7 @@ const generateTokenAndSetCookie = (userId, res) => {
 
     res.cookie("jwt-netflix", token, {
         maxAge: 15 * 24 * 60 * 60 * 1000,
-        secure: process.env.NODE_ENV === "production",
+        secure: process.env.NODE_ENV === "production" || true,
         httpOnly: true,
         sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
         path: '/'
