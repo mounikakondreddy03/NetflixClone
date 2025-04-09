@@ -3,6 +3,7 @@ import Home from "./pages/home/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Footer from "./components/Footer";
+import Watch from "./pages/Watch";
 import { Toaster } from "react-hot-toast";
 import { useAuthStore } from "./store/authUser.js";
 import { useEffect } from "react";
@@ -32,6 +33,7 @@ function App() {
 				<Route path='/' element={<Home />} />
 				<Route path='/login' element={!user ? <Login /> : <Navigate to={"/"} />} />
 				<Route path='/signup' element={!user ? <Signup /> : <Navigate to={"/login"} />} />
+				<Route path='/watch/:id' element={!user ? <Watch /> : <Navigate to={"/login"} />} />
 			</Routes>
 			<Footer />
 

@@ -5,12 +5,14 @@ import getTrendingContent from "../../hooks/getTrendingContent";
 import { TV_CATEGORIES, MOVIE_CATEGORIES, ORIGINAL_IMG_BASE_URL } from "../../utils/constants";
 import { useContentStore } from "../../store/content";
 import MovieSlider from '../../components/MovieSlider'
+// import { useState } from "react";
 
 const HomeScreen = () => {
   const { trendingContent } = getTrendingContent();
   console.log("trendingContent", trendingContent);
 
   const { contentType } = useContentStore();
+  // const [imgLoading, setImgLoading] = useState(true);
 
   // if( !trendingContent ) return (
   //   <div className="h-screen text-white relative">
@@ -24,8 +26,12 @@ const HomeScreen = () => {
       <div className="relative h-screen text-white">
         <Navbar />
 
+        {/* {imgLoading && (
+          <div className="absolute top-0 left-0 w-full h-full bg-black/70 flex items-center justify-center -z-10 shimmer" />
+        )} */}
+
         <img src="/extraction.jpg" alt="Hero img" className="absolute top-0 left-0 w-full h-full object-cover -z-50"/>
-        {/* <img src={ORIGINAL_IMG_BASE_URL + trendingContent?.backdrop_path} alt="Hero img" className="absolute top-0 left-0 w-full h-full object-cover -z-50"/> */}
+        {/* <img src={ORIGINAL_IMG_BASE_URL + trendingContent?.backdrop_path} alt="Hero img" className="absolute top-0 left-0 w-full h-full object-cover -z-50" onClick={() => {setImgLoading(false)}}/> */}
 
         <div className="absolute top-0 left-0 w-full h-full bg-black/50 -z-50" aria-hidden='true'></div>
 

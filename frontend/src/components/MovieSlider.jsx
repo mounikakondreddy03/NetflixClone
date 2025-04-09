@@ -17,8 +17,9 @@ const MovieSlider = ({ category}) => {
 
     useEffect(() => {
         const getContent = async () => {
-            const res = await axios.get(`http://localhost:5000/api/v1/${contentType}/${category}`, { withCredentials: true });
-            // const res = await axios.get(`https://netflixclone-vrof.onrender.com/api/v1/${contentType}/${category}`, { withCredentials: true });
+            // const res = await axios.get(`http://localhost:5000/api/v1/${contentType}/${category}`, { withCredentials: true });
+            const res = await axios.get(`https://netflixclone-vrof.onrender.com/api/v1/${contentType}/${category}`, { withCredentials: true });
+            console.log(contentType, category,"res:", res)
             setContent(res.data.content)
         } 
         getContent();
@@ -37,7 +38,7 @@ const MovieSlider = ({ category}) => {
         <div className="bg-black text-white relative px-5 md:px-20" onMouseEnter={() => setShowArrows(true)} onMouseLeave={() => setShowArrows(false)}> 
             <h2 className="mb-4 text-2xl font-bold"> { formattedCategoryName } { formattedCategoryType } </h2>
 
-            <div className="flex space-x-4 overflow-x-scroll" ref={sliderRef}>
+            <div className="flex space-x-4 overflow-x-scroll scrollbar-hide" ref={sliderRef}>
                 {content.map((item) => {
                     <Link to={`/watch/${item.id}`} className="min-w-[250px] relative group" key={item.id}>
                         <div className="rounded-lg overflow-hidden">

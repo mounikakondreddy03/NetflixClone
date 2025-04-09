@@ -5,7 +5,7 @@ import { useAuthStore } from "../store/authUser";
 const Login = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-
+	
 	const { login, isLoggingIn } = useAuthStore();
 
 	const handleLogin = (e) => {

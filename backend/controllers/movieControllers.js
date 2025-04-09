@@ -1,14 +1,17 @@
 const fetchfromTMDB = require('../services/tmdbService')
+const generateTokenAndSetCookie = require('../utils/generateToken')
 
 async function getTrendingMovie(req, res) {
     try {
         const data = await fetchfromTMDB("https://api.themoviedb.org/3/trending/movie/day?language=en-US")
 
         const randomMovie = data.results[Math.floor(Math.random() * data.results?.length)]
-        res.status(201).json({ success: true, content: randomMovie })
+        const token = generateTokenAndSetCookie(user._id, res)
+        
+        res.status(201).json({ success: true, content: randomMovie, token})
         console.log("trending movie data fetched successfully")
     } catch (error) {
-        console.log('Error in trending movie:', error.message)
+        console.log('Error in trending movie:', error.message) 
         res.status(500).json({ success: false, message: "Internal server error" })
     }
 }

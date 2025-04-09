@@ -14,7 +14,7 @@ const protectRoute = require('./middleware/protectRoute');
 
 const app = express();
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: "https://netflixclone-vrof.onrender.com",
     credentials: true, 
 }));
 
