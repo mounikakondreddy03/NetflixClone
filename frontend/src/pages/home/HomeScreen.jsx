@@ -12,6 +12,8 @@ const HomeScreen = () => {
   console.log("trendingContent", trendingContent);
 
   const { contentType } = useContentStore();
+  console.log(contentType);
+  
   // const [imgLoading, setImgLoading] = useState(true);
 
   // if( !trendingContent ) return (

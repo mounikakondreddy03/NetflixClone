@@ -1,75 +1,96 @@
-const fetchfromTMDB = require('../services/tmdbService')
+const fetchfromRapidAPI = require('../services/tmdbService')
 const generateTokenAndSetCookie = require('../utils/generateToken')
 
-async function getTrendingMovie(req, res) {
+async function getTrendingMovie (req, res) {
     try {
-        const data = await fetchfromTMDB("https://api.themoviedb.org/3/trending/movie/day?language=en-US")
+        const data = await fetchfromRapidAPI('https://moviedatabase.p.rapidapi.com/titles/x/upcoming')
 
-        const randomMovie = data.results[Math.floor(Math.random() * data.results?.length)]
-        const token = generateTokenAndSetCookie(user._id, res)
-        
-        res.status(201).json({ success: true, content: randomMovie, token})
-        console.log("trending movie data fetched successfully")
+        const res = data.results || []
+        const randomMovie = res[Math.floor(Math.random() * res.length)]
+
+        res.status(200).json({ status: 'success', content: randomMovie })
+        console.log("Random Movie: ", randomMovie)
+        console.log('trending movie data fetched successfully')
     } catch (error) {
-        console.log('Error in trending movie:', error.message) 
-        res.status(500).json({ success: false, message: "Internal server error" })
+        console.log('Error in getTrendingMovie: ', error)
+        res.status(500).json({ status: 'error', message: "Internal Server Error" })
     }
 }
 
 async function getMovieTrailers (req, res) {
     const { id } = req.params;
-    try {
-        const data = await fetchfromTMDB(`https://api.themoviedb.org/3/movie/${id}/videos?language=en-US`)
-        res.status(201).json({ success: true, trailers: data.results})
-        console.log("trailers data fetched successfully")
-    } catch (error) {
-        if (error.message.includes("404")) 
-            return res.status(404).send(null)
 
-        console.log('Error in movie trailers:', error.message)
-        res.status(500).json({ success: false, message: "Internal server error"})
+    try {
+        const data = await fetchfromRapidAPI(`https://moviedatabase.p.rapidapi.com/titles/${id}/trailers`)
+        console.log('data: ', data)
+        res.status(200).json({ success: true, content: data.results || []})
+        console.log('trailers data fetched successfully')
+    } catch (error) {
+        console.log('Error in getMovieTrailers: ', error)
+        res.status(500).json({ status: 'error', message: "Internal Server Error" })
         
     }
 }
 
 async function getMovieDetails (req, res) {
     const { id } = req.params;
-    try {
-        const data = await fetchfromTMDB(`https://api.themoviedb.org/3/movie/${id}?language=en-US`)
-        res.status(201).json({ success: true, content: data })
-        console.log("movie details fetched successfully")
-    } catch (error) {
-     if (error.message.includes("404")) {
-        return res.status(404).send(null)
-     }
 
-     console.log('Error in movie details:', error.message)
-     res.status(500).json({ success: false, message: "Internal server error" })
+    try {
+        const data = await fetchfromRapidAPI(`https://moviedatabase.p.rapidapi.com/titles/${id}`)
+        
+        res.status(200).json({ success: true, content: data.results}) 
+        console.log('movie details data fetched successfully')
+    } catch (error) {
+        if (error.message && error.message.includes('404')) {
+            return res.status(404).send(null)
+        }
+
+        console.log('Error in getMovieDetails: ', error)
+        res.status(500).json({ status: 'error', message: "Internal Server Error" })
     }
 }
 
-async function getSimilarMovies(req, res) {
+async function getSimilarMovies (req, res) {
     const { id } = req.params;
+
     try {
-        const data = await fetchfromTMDB(`https://api.themoviedb.org/3/movie/${id}/similar?language=en-US&page=1`) 
-        res.status(201).json({ success: true, content: data.results })
-        console.log("Similar movies data fetched successfully")
+        const data = await fetchfromRapidAPI(`https://moviedatabase.p.rapidapi.com/titles/${id}/similar`)
+        
+        res.status(200).json({ success: true, content: data.results || []})
+        console.log('similar movies data fetched successfully')
     } catch (error) {
-        console.log('Error in similar movies:', error.message)
-        res.status(500).json({ success: false, message: "Internal server error" })
+        console.log('Error in getSimilarMovies: ', error)
+        res.status(500).json({ status: 'error', message: "Internal Server Error" })
+        
     }
 }
 
 async function getMovieByCategory (req, res) {
     const { category } = req.params;
-    try {
-        const data = await fetchfromTMDB(`https://api.themoviedb.org/3/movie/${category}?language=en-US&page=1`)
-        res.status(201).json({ success: true, content: data.results })
-        console.log("Category trigged successfully")
+
+    try{
+        let endpoint;
+        switch(category) {
+            case 'popular':
+                endpoint = 'https://moviedatabase.p.rapidapi.com/titles/x/upcoming'
+                break;
+            case 'top-rated':
+                endpoint = 'https://moviedatabase.p.rapidapi.com/titles/x/top-rated'
+                break;
+            case 'now_playing':
+                endpoint = 'https://moviedatabase.p.rapidapi.com/titles/x/now-playing';
+                break;
+            default:
+                endpoint = `https://moviedatabase.p.rapidapi.com/titlessearch/genre/${category}`;
+        }
+
+
+        const data = await fetchfromRapidAPI(endpoint)
+        res.status(200).json({ success: true, content: data.results || [] })
+        console.log('category data fetched successfully')
     } catch (error) {
-        console.log('Error in movie by category:', error.message)
-        res.status(500).json({ success: false, message: "Internal server error" })
+        console.log('Error in movie by category: ', error)
+        res.status(500).json({ status: 'error', message: "Internal Server Error" })
     }
 }
-
-module.exports = { getTrendingMovie, getMovieTrailers, getMovieDetails, getSimilarMovies, getMovieByCategory}
+module.exports = { getTrendingMovie, getMovieTrailers, getMovieDetails, getSimilarMovies, getMovieByCategory }

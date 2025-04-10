@@ -19,6 +19,9 @@ const MovieSlider = ({ category}) => {
         const getContent = async () => {
             // const res = await axios.get(`http://localhost:5000/api/v1/${contentType}/${category}`, { withCredentials: true });
             const res = await axios.get(`https://netflixclone-vrof.onrender.com/api/v1/${contentType}/${category}`, { withCredentials: true });
+            // console.log('contenttype:', contentType)
+            // console.log('category:', category);
+            // console.log('res:', res)
             console.log(contentType, category,"res:", res)
             setContent(res.data.content)
         } 
