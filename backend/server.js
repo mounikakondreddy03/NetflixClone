@@ -15,11 +15,7 @@ const protectRoute = require('./middleware/protectRoute');
 const app = express();
 const PORT = envVars.PORT;
 
-app.use(cors({
-    origin: "http://localhost:5173/",
-    credentials: true, 
-}));
-
+app.use(cors());
 app.use(express.json());
 app.use(cookieParser());
 
