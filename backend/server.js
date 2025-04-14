@@ -16,7 +16,7 @@ const app = express();
 const PORT = envVars.PORT;
 
 app.use(cors(corsOptions));
-var whitelist = ['http://locaalhost:5173/']
+var whitelist = ['http://locaalhost:5173']
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
