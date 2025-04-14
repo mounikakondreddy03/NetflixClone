@@ -15,7 +15,18 @@ const protectRoute = require('./middleware/protectRoute');
 const app = express();
 const PORT = envVars.PORT;
 
-app.use(cors());
+// app.use(cors());
+var whitelist = ['http://locaalhost:5173/']
+var corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
+ 
 app.use(express.json());
 app.use(cookieParser());
 
