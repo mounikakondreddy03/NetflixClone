@@ -14,8 +14,8 @@ export const useAuthStore = create((set) => ({
 		try {
 			const response = await axios.post('http://localhost:5005/api/v1/auth/signup', credentials, { withCredentials: true})
 			// const response = await axios.post("https://netflixclone-vrof.onrender.com/api/v1/auth/signup", credentials, { withCredentials: true });
-			set({ user: response.data.user, isSigningUp: false });
 
+			set({ user: response.data.user, isSigningUp: false });
 			console.log("Signup successfully");
 			toast.success("Account created successfully");
 		} catch (error) {
@@ -29,10 +29,10 @@ export const useAuthStore = create((set) => ({
 		try {
 			// const response = await axios.post('http://localhost:5005/api/v1/auth/login', credentials, { withCredentials: true})
 			const response = await axios.post('https://netflixclone-vrof.onrender.com/api/v1/auth/login', credentials, { withCredentials: true });
-
+			
+			set({ user: response.data.user, isLoggingIn: false });
 			console.log("Login successfully..");
 			toast.success("Login Successfully");
-			set({ user: response.data.user, isLoggingIn: false });
 		} catch (error) {
 			set({ isLoggingIn: false, user: null });
 			toast.error(error.response?.data?.message || "Login failed");
@@ -44,8 +44,8 @@ export const useAuthStore = create((set) => ({
 		try {
 			// const response = await axios.post('http://localhost:5005/api/v1/auth/logout', {}, { withCredentials: true})
 			await axios.post("https://netflixclone-vrof.onrender.com/api/v1/auth/logout", {}, { withCredentials: true });
+			
 			set({ user: null, isLoggingOut: false });
-
 			console.log("Logout successfully..."); 
 			toast.success("Logged out successfully");
 		} catch (error) {
@@ -61,8 +61,10 @@ export const useAuthStore = create((set) => ({
 			// const response = await axios.get("http://localhost:5005/api/v1/auth/authcheck", { withCredentials: true });
 			const response = await axios.get("https://netflixclone-vrof.onrender.com/api/v1/auth/authcheck", { withCredentials: true });
 
-			console.log("Authcheck successfully;")
 			set({ user: response.data.user, isCheckingAuth: false });
+			console.log("Authcheck successfully..");
+			toast.success("authCheck Successfully");
+
 		} catch (error) {
 			set({ isCheckingAuth: false, user: null });
 			toast.error(error.response?.data?.message || "An error occurred");
