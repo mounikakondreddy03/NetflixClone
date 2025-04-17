@@ -12,8 +12,8 @@ export const useAuthStore = create((set) => ({
 	signup: async (credentials) => {
 		set({ isSigningUp: true });
 		try {
-			// const response = await axios.post('http://localhost:5005/api/v1/auth/signup', credentials, { withCredentials: true})
-			const response = await axios.post("https://netflixclone-vrof.onrender.com/api/v1/auth/signup", credentials, { withCredentials: true });
+			const response = await axios.post('http://localhost:5005/api/v1/auth/signup', credentials, { withCredentials: true})
+			// const response = await axios.post("https://netflixclone-vrof.onrender.com/api/v1/auth/signup", credentials, { withCredentials: true });
 			set({ user: response.data.user, isSigningUp: false });
 
 			console.log("Signup successfully");

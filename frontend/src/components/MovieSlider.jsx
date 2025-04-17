@@ -151,7 +151,7 @@ const MovieSlider = ({ category }) => {
   useEffect(() => {
     const getContent = async () => {
       try {
-        const res = await axios.get(`https://netflixclone-vrof.onrender.com/api/v1/${contentType}/${category.id}`, {
+        const res = await axios.get(`http://localhost:5000/api/v1/movie/`, {
           withCredentials: true,
         });
         setContent(res.data.content);
